@@ -1,3 +1,12 @@
+# Terraform state will be stored in S3
+terraform {
+  backend "s3" {
+    bucket = "terraform-demo-bucket"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
 # Use AWS Terraform provider
 provider "aws" {
   region = "us-east-1"
@@ -11,7 +20,7 @@ resource "aws_instance" "default" {
   vpc_security_group_ids = [aws_security_group.default.id]
   source_dest_check      = false
   instance_type          = var.instance_type
-  
+
   tags = {
     Name = "terraform-default"
   }
@@ -19,12 +28,12 @@ resource "aws_instance" "default" {
 
 # Create Security Group for EC2
 resource "aws_security_group" "default" {
-  name = "terraform-demo"
-  
+  name = "terraform-default-sg"
+
   ingress {
     from_port   = 80
     to_port     = 80
-    protocol    = "http"
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -35,13 +44,4 @@ resource "aws_security_group" "default" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-}
-
-# Terraform state will be stored in S3
-terraform {
-  backend "s3" {
-    bucket = "terraform-bucket-sundar"
-    key    = "terraform.tfstate"
-    region = "us-east-1"
-  }
 }
