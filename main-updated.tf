@@ -54,7 +54,7 @@ terraform {
   }
 
 # Block Public access for S3 Bucket
-  resource "aws_s3_bucket_public_access_block" "terraform-state" {
+resource "aws_s3_bucket_public_access_block" "terraform-state" {
     bucket = aws_s3_bucket.terraform-state.id
     block_public_acls = true
     block_public_policy = true
