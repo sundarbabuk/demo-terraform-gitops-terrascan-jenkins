@@ -1,0 +1,19 @@
+Feature: Define AWS Security Groups
+  In order to improve security
+  As engineers
+  We will use AWS Security Groups to control inbound traffic
+
+  Scenario: Policy Structure
+    Given I have AWS Security Group defined
+    Then it must contain ingress
+
+  Scenario: Only selected ports should be publicly open
+    Given I have AWS Security Group defined
+    When it contains ingress
+    Then it must only have tcp protocol and port 22,443 for 0.0.0.0/0
+
+
+
+
+
+  
