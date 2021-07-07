@@ -9,12 +9,12 @@ variable "key_name" {
 
 variable "instance_type" {
   description = "AWS instance type"
-  default     = "t3.small"
+  default     = "t2.small"
 }
 
 variable "ami" {
   description = "Base AMI to launch the instances"
 
-  # Bitnami NGINX AMI
-  default = "ami-021acbdb89706aa89"
+  # Grafana AMI Certified by Bitnami
+  default = "ami-040db2e77d6bc2c82"
 }
