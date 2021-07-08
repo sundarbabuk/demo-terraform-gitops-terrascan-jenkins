@@ -20,7 +20,7 @@ try {
       ]]) {
         ansiColor('xterm') {
           sh 'PATH=/var/jenkins_home/terraform'
-          sh 'terraform init'
+          sh '/var/jenkins_home/terraform init'
         }
       }
     }
