@@ -41,7 +41,7 @@ try {
     }
   }
 
-  if (env.BRANCH_NAME == 'master') {
+  // if (env.BRANCH_NAME == 'master') {
 
     // Run terraform apply
     stage('apply') {
@@ -74,7 +74,7 @@ try {
         }
       }
     }
-  }
+  // }
   currentBuild.result = 'SUCCESS'
 }
 catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException flowError) {
