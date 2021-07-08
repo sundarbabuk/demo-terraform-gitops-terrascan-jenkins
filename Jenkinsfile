@@ -36,7 +36,7 @@ try {
         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
       ]]) {
         ansiColor('xterm') {
-          sh 'terraform plan'
+          sh '/var/jenkins_home/terraform plan'
         }
       }
     }
