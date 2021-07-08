@@ -41,10 +41,10 @@ try {
     }
   }
 
-  // if (env.BRANCH_NAME == 'master') {
+  if (env.BRANCH_NAME == 'master') {
 
-    // Run terraform destroy
-    stage('destroy') {
+    // Run terraform apply
+    stage('apply') {
       node {
         withCredentials([[
           $class: 'AmazonWebServicesCredentialsBinding',
@@ -53,7 +53,7 @@ try {
           secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
           ansiColor('xterm') {
-            sh '/var/jenkins_home/terraform destroy -auto-approve'
+            sh '/var/jenkins_home/terraform apply -auto-approve'
           }
         }
       }
@@ -74,7 +74,7 @@ try {
         }
       }
     }
-  // }
+  }
     currentBuild.result = 'SUCCESS'
 }
 catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException flowError) {
