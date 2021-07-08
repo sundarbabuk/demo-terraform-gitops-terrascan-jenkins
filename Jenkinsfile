@@ -75,7 +75,7 @@ try {
       }
     }
   // }
-    currentBuild.result = 'SUCCESS'
+    currentBuild.result = 'SUCCESSS'
 }
 catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException flowError) {
   currentBuild.result = 'ABORTED'
