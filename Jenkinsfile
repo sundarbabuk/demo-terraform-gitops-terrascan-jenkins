@@ -19,7 +19,7 @@ try {
         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
       ]]) {
         ansiColor('xterm') {
-          sh 'PATH=/bin/terraform'
+          sh 'PATH=/var/jenkins_home/terraform'
           sh 'terraform init'
         }
       }
