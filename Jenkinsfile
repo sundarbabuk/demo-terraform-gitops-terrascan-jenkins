@@ -54,7 +54,7 @@ try {
           secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
           ansiColor('xterm') {
-            sh 'terraform apply -auto-approve'
+            sh '/var/jenkins_home/terraform apply -auto-approve'
           }
         }
       }
@@ -70,7 +70,7 @@ try {
           secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
           ansiColor('xterm') {
-            sh 'terraform show'
+            sh '/var/jenkins_home/terraform show'
           }
         }
       }
