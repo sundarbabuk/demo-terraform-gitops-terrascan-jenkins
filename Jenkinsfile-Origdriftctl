@@ -1,17 +1,29 @@
-pipeline {
-    agent any
-    environment {
-        AWS_DEFAULT_REGION="us-east-1"
-        AWS_ACCESS_KEY_ID=skAWSCredentials("AWS_ACCESS_KEY_ID")
-        AWS_SECRET_ACCESS_KEY=skAWSCredentials("AWS_SECRET_ACCESS_KEY")
+String credentialsId = 'skAWSCredentials'
+// pipeline {
+    // agent any
+    // environment {
+    //     AWS_DEFAULT_REGION="us-east-1"
+    //     AWS_ACCESS_KEY_ID=skAWSCredentials("AWS_ACCESS_KEY_ID")
+    //     AWS_SECRET_ACCESS_KEY=skAWSCredentials("AWS_SECRET_ACCESS_KEY")
         // PATH="$PATH:$HOME/dctlenv/bin/"
-    }
+    // }
+
     stages {
         stage("Init") {
+            node {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: credentialsId,
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+      ]]) {
             steps {
                 sh "/var/jenkins_home/terraform init"
+                }
             }
         }
+    }
+
         stage('Validate') {
             failFast true
             parallel {
@@ -45,4 +57,4 @@ pipeline {
             }
         }
     }
-}
+// }
