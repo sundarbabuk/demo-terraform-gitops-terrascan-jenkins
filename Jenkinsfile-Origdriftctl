@@ -1,7 +1,3 @@
-# ====================
-# Classic GitOps workflow
-# ====================
-
 pipeline {
     agent any
     environment {
