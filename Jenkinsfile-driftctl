@@ -36,7 +36,7 @@ try
         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
       ]]) {
         ansiColor('xterm') {
-      failFast true
+      // failFast true
       parallel {
           stage("driftctl") {
               steps {
