@@ -29,6 +29,13 @@ try
   // Run Driftctl
   stage('Validate') {
     node {
+      withCredentials([[
+        $class: 'AmazonWebServicesCredentialsBinding',
+        credentialsId: credentialsId,
+        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+      ]]) {
+        ansiColor('xterm') {
       failFast true
       parallel {
           stage("driftctl") {
@@ -47,7 +54,9 @@ try
               steps {
                   sh "/var/jenkins_home/terraform validate"
               }
+            }
           }
+        }
       }
     }
   }
