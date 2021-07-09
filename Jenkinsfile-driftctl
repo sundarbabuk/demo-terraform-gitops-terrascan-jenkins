@@ -27,7 +27,7 @@ try {
 
   // Run Driftctl
   stage('Validate') {
-      // failFast true
+      failFast true
       parallel {
           stage("driftctl") {
               steps {
