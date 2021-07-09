@@ -1,7 +1,8 @@
 // Jenkinsfile
 String credentialsId = 'skAWSCredentials'
 
-try {
+try 
+{
   stage('checkout') {
     node {
       cleanWs()
@@ -27,6 +28,7 @@ try {
 
   // Run Driftctl
   stage('Validate') {
+    node {
       failFast true
       parallel {
           stage("driftctl") {
@@ -47,6 +49,7 @@ try {
               }
           }
       }
+    }
   }
 
   // Run terraform plan
@@ -101,6 +104,7 @@ try {
   }
   currentBuild.result = 'SUCCESS'
 }
+
 catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException flowError) {
   currentBuild.result = 'ABORTED'
 }
