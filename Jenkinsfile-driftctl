@@ -29,7 +29,7 @@ try
   // Run Driftctl
   stage('Validate') {
     node {
-      failFast true
+      // failFast true
       parallel {
           stage("driftctl") {
               steps {
