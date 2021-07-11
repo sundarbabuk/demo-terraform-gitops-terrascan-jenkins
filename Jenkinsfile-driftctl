@@ -1,20 +1,17 @@
 // Jenkinsfile
-String credentialsId = 'skAWSCredentials'
+// String credentialsId = 'skAWSCredentials'
 
 pipeline {
   agent any
   environment {
-    withCredentials([[
-            $class: 'AmazonWebServicesCredentialsBinding',
-            credentialsId: credentialsId,
-            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-          ]]) 
+    AWS_DEFAULT_REGION="us-east-1"
+    AWS_ACCESS_KEY_ID=skAWSCredentials("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY=skAWSCredentials("AWS_SECRET_ACCESS_KEY")
   }
 
     stages {
         stage('checkout') {
-          node {
+          steps {
             cleanWs()
             checkout scm
           }
@@ -24,31 +21,16 @@ pipeline {
     
       // Run terraform init
       stage('init') {
-        node {
-          withCredentials([[
-            $class: 'AmazonWebServicesCredentialsBinding',
-            credentialsId: credentialsId,
-            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-          ]]) {
-            ansiColor('xterm') {
+        steps {
+          
               sh '/var/jenkins_home/terraform init'
             }
           }
-        }
-      }
+      
 
   // Run Driftctl
   stage('Validate') {
-    node {
-      withCredentials([[
-        $class: 'AmazonWebServicesCredentialsBinding',
-        credentialsId: credentialsId,
-        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-      ]]) {
-        ansiColor('xterm') {
-      // failFast true
+      failFast true
       parallel {
           stage("driftctl") {
               steps {
@@ -69,9 +51,7 @@ pipeline {
             }
           }
         }
-      }
-    }
-  }
+
 
   // Run terraform plan
   stage('plan') {
