@@ -56,7 +56,7 @@ pipeline {
 
   // Run terraform plan
   stage('plan') {
-    stage {
+    steps {
       
           sh '/var/jenkins_home/terraform plan'
         }
@@ -67,14 +67,14 @@ pipeline {
 
     // Run terraform apply
     stage('apply') {
-      stage {
+      steps {
             sh '/var/jenkins_home/terraform apply -auto-approve'
           }
     }
 
     // Run terraform show
     stage('show') {
-      stage {
+      steps {
             sh '/var/jenkins_home/terraform show'
           }
         }
