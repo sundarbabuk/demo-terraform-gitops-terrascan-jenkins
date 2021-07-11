@@ -10,6 +10,7 @@ try
     }
   }
 
+stages {
   // Run terraform init
   stage('init') {
     node {
@@ -112,6 +113,7 @@ try
     }
   }
   currentBuild.result = 'SUCCESS'
+  }
 }
 
 catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException flowError) {
