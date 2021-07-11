@@ -20,7 +20,13 @@ resource "aws_instance" "default" {
   vpc_security_group_ids = [aws_security_group.default.id]
   source_dest_check      = false
   instance_type          = var.instance_type
+  ebs_optimized          = true
   monitoring             = true
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_put_response_hop_limit = 2
+    http_tokens                 = "required"
+  }
 
   tags = {
     Name = "terraform-default"
@@ -39,8 +45,8 @@ resource "aws_security_group" "default" {
   }
 
   ingress {
-    from_port   = 22
-    to_port     = 22
+    from_port   = 26
+    to_port     = 26
     protocol    = "tcp"
     cidr_blocks = ["99.73.228.255/32"]
   }
