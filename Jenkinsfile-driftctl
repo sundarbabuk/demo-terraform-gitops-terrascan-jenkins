@@ -1,6 +1,8 @@
 // Jenkinsfile
 String credentialsId = 'skAWSCredentials'
 
+pipeline {
+
 try 
 {
   stage('checkout') {
@@ -126,5 +128,6 @@ catch (err) {
 finally {
   if (currentBuild.result == 'SUCCESS') {
     currentBuild.result = 'SUCCESS'
+    }
   }
 }
