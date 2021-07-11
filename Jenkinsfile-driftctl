@@ -1,19 +1,18 @@
 // Jenkinsfile
 String credentialsId = 'skAWSCredentials'
 
-
-
-try 
-{
-  stage('checkout') {
-    node {
-      cleanWs()
-      checkout scm
-    }
-  }
-
 pipeline {
+  agent any
     stages {
+      stage('checkout') {
+        node {
+          cleanWs()
+          checkout scm
+        }
+      }
+
+
+    
       // Run terraform init
       stage('init') {
         node {
@@ -116,19 +115,5 @@ pipeline {
     }
   }
   currentBuild.result = 'SUCCESS'
-  }
-}
-
-catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException flowError) {
-  currentBuild.result = 'ABORTED'
-}
-catch (err) {
-  currentBuild.result = 'FAILURE'
-  throw err
-}
-finally {
-  if (currentBuild.result == 'SUCCESS') {
-    currentBuild.result = 'SUCCESS'
-    }
   }
 }
