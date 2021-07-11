@@ -3,13 +3,22 @@ String credentialsId = 'skAWSCredentials'
 
 pipeline {
   agent any
+  environment {
+    withCredentials([[
+            $class: 'AmazonWebServicesCredentialsBinding',
+            credentialsId: credentialsId,
+            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+          ]]) 
+  }
+
     stages {
-      stage('checkout') {
-        node {
-          cleanWs()
-          checkout scm
+        stage('checkout') {
+          node {
+            cleanWs()
+            checkout scm
+          }
         }
-      }
 
 
     
