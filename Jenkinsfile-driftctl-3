@@ -4,15 +4,9 @@ pipeline {
         AWS_DEFAULT_REGION="us-east-1"
         AWS_ACCESS_KEY_ID=credentials("AWS_ACCESS_KEY_ID")
         AWS_SECRET_ACCESS_KEY=credentials("AWS_SECRET_ACCESS_KEY")
-        PATH="$PATH:$HOME/dctlenv/bin/"
+        // PATH="$PATH:$HOME/dctlenv/bin/"
     }
-    stages {
-        stage('checkout') {
-          steps {
-            cleanWs()
-            checkout scm
-        }
-    }
+    
   
         stage("Init") {
             steps {
