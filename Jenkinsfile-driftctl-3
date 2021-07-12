@@ -7,6 +7,7 @@ pipeline {
         // PATH="$PATH:$HOME/dctlenv/bin/"
     }
     
+    stages {
   
         stage("Init") {
             steps {
