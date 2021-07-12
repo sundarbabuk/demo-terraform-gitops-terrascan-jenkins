@@ -18,8 +18,8 @@ pipeline {
                 stage("driftctl") {
                     steps {
                         sh "which dctlenv || git clone https://github.com/wbeuil/dctlenv"
-                        sh "dctlenv use latest"
-                        sh "driftctl scan"
+                        sh "/var/jenkins_home/dctlenv use latest"
+                        sh "/var/jenkins_home/driftctl scan"
                     }
                 }
                 stage("terraform/fmt") {
