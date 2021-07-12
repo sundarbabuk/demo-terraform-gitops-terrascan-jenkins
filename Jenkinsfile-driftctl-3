@@ -6,6 +6,12 @@ pipeline {
         AWS_SECRET_ACCESS_KEY=credentials("AWS_SECRET_ACCESS_KEY")
         // PATH="$PATH:$HOME/dctlenv/bin/"
     }
+    parameters {
+        choice(
+            choices: ['main' , 'master'],
+            description: '',
+            name: 'BRANCH_NAME')
+    }
     
     stages {
   
@@ -47,8 +53,8 @@ pipeline {
         }
 
         stage("Deploy") {
-            // when {
-                // env.BRANCH_NAME == 'main') }
+            when {
+                expression { params.BRANCH_NAME == 'main' }
             steps {
                 sh "terraform apply -input=false plan.out"
                 }
