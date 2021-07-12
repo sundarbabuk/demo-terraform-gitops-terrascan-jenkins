@@ -55,10 +55,10 @@ pipeline {
         stage("Deploy") {
             when {
                 expression { params.BRANCH_NAME == 'main' }
+                }
             steps {
                 sh "terraform apply -input=false plan.out"
                 }
-            }
         }
 
         stage("Show") {
