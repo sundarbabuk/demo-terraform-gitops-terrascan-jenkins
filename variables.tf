@@ -16,5 +16,5 @@ variable "ami" {
   description = "Base AMI to launch the instances"
 
   # Grafana AMI Certified by Bitnami
-  default = "ami-0a90ed50c0366f4b4"
+  default = "ami-021acbdb89706aa89"
 }
