@@ -15,13 +15,13 @@ pipeline {
     
     stages {
   
-        stage("Init") {
+        stage("Terraform Initialize") {
             steps {
                 sh "/var/jenkins_home/terraform init"
             }
         }
 
-        stage('Validate') {
+        stage('Terraform Validation') {
             failFast true
             parallel {
                 stage("driftctl") {
@@ -34,25 +34,25 @@ pipeline {
                         sh "/var/jenkins_home/dctlenv/bin/driftctl gen-driftignore -i /tmp/result.json --exclude-missing > .driftignore"
                     }
                 }
-                // stage("terraform/fmt") {
-                //     steps {
-                //         sh "/var/jenkins_home/terraform fmt -check -diff"
-                //     }
-                // }
-                stage("terraform/validate") {
+                stage("Terraform Format") {
+                    steps {
+                        sh "/var/jenkins_home/terraform fmt -check -diff"
+                    }
+                }
+                stage("Terraform Validate") {
                     steps {
                         sh "/var/jenkins_home/terraform validate"
                     }
                 }
             }
         }
-        stage("Plan") {
+        stage("Terraform Plan") {
             steps {
                 sh "/var/jenkins_home/terraform plan -out=plan.out"
             }
         }
 
-        stage("Deploy") {
+        stage("Terraform Provision") {
             when {
                 expression { params.BRANCH_NAME == 'main' }
                 }
@@ -61,7 +61,7 @@ pipeline {
                 }
         }
 
-        stage("Show") {
+        stage("Terraform Show") {
             steps {
                 sh "/var/jenkins_home/terraform show"
             }
