@@ -2,7 +2,7 @@
 terraform {
   backend "s3" {
     bucket = "terraform-state-sk"
-    key    = "terraform.tfstate"
+    key    = "terraform-Iac.tfstate"
     region = "us-east-1"
   }
 }
@@ -29,14 +29,14 @@ resource "aws_instance" "default" {
   }
 
   tags = {
-    Name = "terraform-default"
+    Name = "IaC-demo"
   }
 }
 
 # Create Security Group for EC2
 resource "aws_security_group" "default" {
-  name = "terraform-default-sg"
-  description = "Allow web inbound traffic"
+  name = "Iac-demo-sg"
+  description = "Allow inbound web traffic"
 
   ingress {
     from_port   = 80
