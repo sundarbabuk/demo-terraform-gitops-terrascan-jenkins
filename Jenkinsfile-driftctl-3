@@ -36,7 +36,8 @@ pipeline {
                 }
                 stage("Terraform Format") {
                     steps {
-                        sh "/var/jenkins_home/terraform fmt -check -diff"
+                        // sh "/var/jenkins_home/terraform fmt -check -diff"
+                        sh "/var/jenkins_home/terraform fmt"
                     }
                 }
                 stage("Terraform Validate") {
