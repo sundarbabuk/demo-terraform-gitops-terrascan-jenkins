@@ -14,17 +14,22 @@ pipeline {
     }
     
     stages {
+
+        stage("BDD for IaC") {
+            echo 'Complete'
+                }
+        
   
-        stage("Terraform Initialize") {
+        stage("IaC Initialize") {
             steps {
                 sh "/var/jenkins_home/terraform init"
             }
         }
 
-        stage('Terraform Validation') {
+        stage('IaC Validation') {
             failFast true
             parallel {
-                stage("driftctl") {
+                stage("IaC Drift Check") {
                     steps {
                         // sh "which dctlenv || git clone https://github.com/wbeuil/dctlenv"
                         sh "/var/jenkins_home/dctlenv/bin/dctlenv use latest"
@@ -34,27 +39,27 @@ pipeline {
                         // sh "/var/jenkins_home/dctlenv/bin/driftctl gen-driftignore -i /tmp/result.json --exclude-missing > .driftignore"
                     }
                 }
-                stage("Terraform Format") {
+                stage("IaC Format Check") {
                     steps {
                         // sh "/var/jenkins_home/terraform fmt -check -diff"
                         sh "/var/jenkins_home/terraform fmt"
                     }
                 }
-                stage("Terraform Validate") {
+                stage("IaC Config Validation") {
                     steps {
                         sh "/var/jenkins_home/terraform validate"
                     }
                 }
             }
         }
-        stage("Terraform Plan") {
+        stage("IaC Planning") {
             steps {
                 // sh "/var/jenkins_home/terraform plan -out=plan.out"
                 sh "/var/jenkins_home/terraform plan"
             }
         }
 
-        stage("Terraform Provision") {
+        stage("IaC Provisioning") {
             when {
                 expression { params.BRANCH_NAME == 'main' }
                 }
@@ -64,7 +69,7 @@ pipeline {
                 }
         }
 
-        stage("Terraform Show") {
+        stage("Display Provisioned Resources") {
             steps {
                 sh "/var/jenkins_home/terraform show"
             }
