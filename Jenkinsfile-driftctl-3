@@ -34,11 +34,11 @@ pipeline {
                         // sh "/var/jenkins_home/dctlenv/bin/driftctl gen-driftignore -i /tmp/result.json --exclude-missing > .driftignore"
                     }
                 }
-                stage("terraform/fmt") {
-                    steps {
-                        sh "/var/jenkins_home/terraform fmt -check -diff"
-                    }
-                }
+                // stage("terraform/fmt") {
+                //     steps {
+                //         sh "/var/jenkins_home/terraform fmt -check -diff"
+                //     }
+                // }
                 stage("terraform/validate") {
                     steps {
                         sh "/var/jenkins_home/terraform validate"
