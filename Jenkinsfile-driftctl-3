@@ -16,9 +16,10 @@ pipeline {
     stages {
 
         stage("BDD for IaC") {
+            steps {
             echo 'Complete'
                 }
-        
+        }
   
         stage("IaC Initialize") {
             steps {
