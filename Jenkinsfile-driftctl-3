@@ -59,7 +59,7 @@ pipeline {
                 expression { params.BRANCH_NAME == 'main' }
                 }
             steps {
-                sh "terraform apply -input=false plan.out"
+                // sh "terraform apply -input=false plan.out"
                 sh "/var/jenkins_home/terraform apply"
                 }
         }
