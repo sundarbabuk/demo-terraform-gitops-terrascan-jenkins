@@ -43,8 +43,8 @@ try {
 
   if (env.BRANCH_NAME == 'main') {
 
-    // Run terraform apply
-    stage('apply') {
+    // Run terraform destroy
+    stage('destroy') {
       node {
         withCredentials([[
           $class: 'AmazonWebServicesCredentialsBinding',
@@ -53,7 +53,7 @@ try {
           secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
           ansiColor('xterm') {
-            sh '/var/jenkins_home/terraform apply -auto-approve'
+            sh '/var/jenkins_home/terraform destroy -auto-approve'
           }
         }
       }

@@ -21,12 +21,12 @@ resource "aws_instance" "default" {
   source_dest_check      = false
   instance_type          = var.instance_type
   // ebs_optimized          = true
-  // monitoring             = true
-  // metadata_options {
-  //   http_endpoint               = "enabled"
-  //   http_put_response_hop_limit = 2
-  //   http_tokens                 = "required"
-  // }
+  monitoring             = true
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_put_response_hop_limit = 2
+    http_tokens                 = "required"
+  }
 
   tags = {
     Name = "terraform-default"
