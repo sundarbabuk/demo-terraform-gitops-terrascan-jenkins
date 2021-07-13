@@ -49,7 +49,8 @@ pipeline {
         }
         stage("Terraform Plan") {
             steps {
-                sh "/var/jenkins_home/terraform plan -out=plan.out"
+                // sh "/var/jenkins_home/terraform plan -out=plan.out"
+                sh "/var/jenkins_home/terraform plan"
             }
         }
 
@@ -59,6 +60,7 @@ pipeline {
                 }
             steps {
                 sh "terraform apply -input=false plan.out"
+                sh "/var/jenkins_home/terraform apply"
                 }
         }
 
