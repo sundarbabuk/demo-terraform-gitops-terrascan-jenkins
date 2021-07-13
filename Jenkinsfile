@@ -25,6 +25,38 @@ try {
     }
   }
 
+  // Run terraform format
+  stage('Terraform Format') {
+    node {
+      withCredentials([[
+        $class: 'AmazonWebServicesCredentialsBinding',
+        credentialsId: credentialsId,
+        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+      ]]) {
+        ansiColor('xterm') {
+          sh '/var/jenkins_home/terraform fmt'
+        }
+      }
+    }
+  }
+
+  // Run terraform validate
+  stage('Terraform Validate') {
+    node {
+      withCredentials([[
+        $class: 'AmazonWebServicesCredentialsBinding',
+        credentialsId: credentialsId,
+        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+      ]]) {
+        ansiColor('xterm') {
+          sh '/var/jenkins_home/terraform validate'
+        }
+      }
+    }
+  }
+
   // Run terraform plan
   stage('Terraform Plan') {
     node {
@@ -43,8 +75,8 @@ try {
 
   if (env.BRANCH_NAME == 'main') {
 
-    // Run terraform destroy
-    stage('Terraform Destroy') {
+    // Run terraform apply
+    stage('Terraform Apply') {
       node {
         withCredentials([[
           $class: 'AmazonWebServicesCredentialsBinding',
@@ -53,7 +85,7 @@ try {
           secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
           ansiColor('xterm') {
-            sh '/var/jenkins_home/terraform destroy -auto-approve'
+            sh '/var/jenkins_home/terraform apply -auto-approve'
           }
         }
       }
