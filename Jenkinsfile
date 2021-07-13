@@ -10,7 +10,7 @@ try {
   }
 
   // Run terraform init
-  stage('init') {
+  stage('Terraform Initialize') {
     node {
       withCredentials([[
         $class: 'AmazonWebServicesCredentialsBinding',
@@ -26,7 +26,7 @@ try {
   }
 
   // Run terraform plan
-  stage('plan') {
+  stage('Terraform Plan') {
     node {
       withCredentials([[
         $class: 'AmazonWebServicesCredentialsBinding',
@@ -43,8 +43,8 @@ try {
 
   if (env.BRANCH_NAME == 'main') {
 
-    // Run terraform destroy
-    stage('destroy') {
+    // Run terraform apply
+    stage('Terraform Apply') {
       node {
         withCredentials([[
           $class: 'AmazonWebServicesCredentialsBinding',
@@ -53,14 +53,14 @@ try {
           secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
           ansiColor('xterm') {
-            sh '/var/jenkins_home/terraform destroy -auto-approve'
+            sh '/var/jenkins_home/terraform apply -auto-approve'
           }
         }
       }
     }
 
     // Run terraform show
-    stage('show') {
+    stage('Terraform Show') {
       node {
         withCredentials([[
           $class: 'AmazonWebServicesCredentialsBinding',

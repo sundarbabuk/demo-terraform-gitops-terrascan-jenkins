@@ -15,6 +15,6 @@ variable "instance_type" {
 variable "ami" {
   description = "Base AMI to launch the instances"
 
-  # NGINX AMI Certified by Bitnami
-  default = "ami-021acbdb89706aa89"
+  # Grafana AMI Certified by Bitnami
+  default = "ami-0a90ed50c0366f4b4"
 }
