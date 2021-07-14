@@ -9,8 +9,41 @@ try {
     }
   }
 
+  // Run BDD Test
+  stage('BDD for IaC') {
+    node {
+      withCredentials([[
+        $class: 'AmazonWebServicesCredentialsBinding',
+        credentialsId: credentialsId,
+        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+      ]]) {
+        ansiColor('xterm') {
+          echo 'Complete'
+        }
+      }
+    }
+  }
+
+
+  // Run Unit Test
+  stage('Unit Test-IaC') {
+    node {
+      withCredentials([[
+        $class: 'AmazonWebServicesCredentialsBinding',
+        credentialsId: credentialsId,
+        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+      ]]) {
+        ansiColor('xterm') {
+          echo 'Complete'
+        }
+      }
+    }
+  }
+
   // Run terraform init
-  stage('Terraform Initialize') {
+  stage('IaC Initialize') {
     node {
       withCredentials([[
         $class: 'AmazonWebServicesCredentialsBinding',
@@ -26,7 +59,7 @@ try {
   }
 
   // Run terraform format
-  stage('Terraform Format') {
+  stage('IaC Format Check') {
     node {
       withCredentials([[
         $class: 'AmazonWebServicesCredentialsBinding',
@@ -42,7 +75,7 @@ try {
   }
 
   // Run terraform validate
-  stage('Terraform Validate') {
+  stage('IaC Config Validation') {
     node {
       withCredentials([[
         $class: 'AmazonWebServicesCredentialsBinding',
@@ -58,7 +91,7 @@ try {
   }
 
   // Run terraform plan
-  stage('Terraform Plan') {
+  stage('IaC Planning') {
     node {
       withCredentials([[
         $class: 'AmazonWebServicesCredentialsBinding',
@@ -76,7 +109,7 @@ try {
   if (env.BRANCH_NAME == 'main') {
 
     // Run terraform destroy
-    stage('Terraform Destroy') {
+    stage('IaC De-Provisioning') {
       node {
         withCredentials([[
           $class: 'AmazonWebServicesCredentialsBinding',
@@ -92,7 +125,7 @@ try {
     }
 
     // Run terraform show
-    stage('Terraform Show') {
+    stage('Display Provisioned Resources') {
       node {
         withCredentials([[
           $class: 'AmazonWebServicesCredentialsBinding',
