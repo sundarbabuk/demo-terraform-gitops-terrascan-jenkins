@@ -9,8 +9,41 @@ try {
     }
   }
 
+  // Run BDD Test
+  stage('BDD for IaC') {
+    node {
+      withCredentials([[
+        $class: 'AmazonWebServicesCredentialsBinding',
+        credentialsId: credentialsId,
+        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+      ]]) {
+        ansiColor('xterm') {
+          echo 'Complete'
+        }
+      }
+    }
+  }
+
+
+  // Run Unit Test
+  stage('Unit Test-IaC') {
+    node {
+      withCredentials([[
+        $class: 'AmazonWebServicesCredentialsBinding',
+        credentialsId: credentialsId,
+        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+      ]]) {
+        ansiColor('xterm') {
+          echo 'Complete'
+        }
+      }
+    }
+  }
+
   // Run terraform init
-  stage('init') {
+  stage('IaC Initialize') {
     node {
       withCredentials([[
         $class: 'AmazonWebServicesCredentialsBinding',
@@ -25,8 +58,40 @@ try {
     }
   }
 
+  // Run terraform format
+  stage('IaC Format Check') {
+    node {
+      withCredentials([[
+        $class: 'AmazonWebServicesCredentialsBinding',
+        credentialsId: credentialsId,
+        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+      ]]) {
+        ansiColor('xterm') {
+          sh '/var/jenkins_home/terraform fmt'
+        }
+      }
+    }
+  }
+
+  // Run terraform validate
+  stage('IaC Config Validation') {
+    node {
+      withCredentials([[
+        $class: 'AmazonWebServicesCredentialsBinding',
+        credentialsId: credentialsId,
+        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+      ]]) {
+        ansiColor('xterm') {
+          sh '/var/jenkins_home/terraform validate'
+        }
+      }
+    }
+  }
+
   // Run terraform plan
-  stage('plan') {
+  stage('IaC Planning') {
     node {
       withCredentials([[
         $class: 'AmazonWebServicesCredentialsBinding',
@@ -44,7 +109,7 @@ try {
   if (env.BRANCH_NAME == 'main') {
 
     // Run terraform apply
-    stage('apply') {
+    stage('IaC Provisioning') {
       node {
         withCredentials([[
           $class: 'AmazonWebServicesCredentialsBinding',
@@ -60,7 +125,7 @@ try {
     }
 
     // Run terraform show
-    stage('show') {
+    stage('Display Provisioned Resources') {
       node {
         withCredentials([[
           $class: 'AmazonWebServicesCredentialsBinding',

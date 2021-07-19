@@ -33,6 +33,11 @@ resource "aws_instance" "default" {
   }
 }
 
+# Encrypt EBS Volume
+resource "aws_ebs_encryption_by_default" "example" {
+  enabled = true
+}
+
 # Create Security Group for EC2
 resource "aws_security_group" "default" {
   name = "Iac-demo-sg"
