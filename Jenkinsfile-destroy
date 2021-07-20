@@ -15,13 +15,6 @@ pipeline {
     
     stages {
 
-        stage("BDD for IaC") {
-            steps {
-            echo 'Test Completed Successfully'
-                }
-        }
-
-
         stage("IaC Initialize") {
             steps {
                 sh "/var/jenkins_home/terraform init"
@@ -61,13 +54,13 @@ pipeline {
             }
         }
 
-        stage("IaC Provisioning") {
+        stage("IaC De-Provisioning") {
             when {
                 expression { params.BRANCH_NAME == 'main' }
                 }
             steps {
                 // sh "terraform apply -input=false plan.out"
-                sh "/var/jenkins_home/terraform apply -auto-approve"
+                sh "/var/jenkins_home/terraform destroy -auto-approve"
                 }
         }
 
