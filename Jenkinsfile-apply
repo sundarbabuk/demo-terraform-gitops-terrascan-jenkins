@@ -16,21 +16,21 @@ pipeline {
     options {
         ansiColor('xterm')
     }
-    
+
     stages {
 
-        stage("BDD for IaC") {
-            steps {
-            echo 'Test Completed Successfully'
-                }
-        }
+    //     stage("BDD for IaC") {
+    //         steps {
+    //         echo 'Test Completed Successfully'
+    //             }
+    //     }
 
 
-        stage("IaC Initialize") {
-            steps {
-                sh "/var/jenkins_home/terraform init"
-            }
-        }
+    //     stage("IaC Initialize") {
+    //         steps {
+    //             sh "/var/jenkins_home/terraform init"
+    //         }
+    //     }
 
         stage('IaC Validation') {
             failFast true
