@@ -21,7 +21,7 @@ pipeline {
 
     //     stage("BDD for IaC") {
     //         steps {
-    //         echo 'Test Completed Successfully'
+    //         echo 'Testing Completed Successfully'
     //             }
     //     }
 
