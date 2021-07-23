@@ -1,0 +1,73 @@
+pipeline {
+    agent any
+    environment {
+        AWS_DEFAULT_REGION="us-east-1"
+        AWS_ACCESS_KEY_ID=credentials("AWS_ACCESS_KEY_ID")
+        AWS_SECRET_ACCESS_KEY=credentials("AWS_SECRET_ACCESS_KEY")
+        // PATH="$PATH:$HOME/dctlenv/bin/"
+    }
+    parameters {
+        choice(
+            choices: ['main' , 'master'],
+            description: '',
+            name: 'BRANCH_NAME')
+    }
+    
+    stages {
+
+        stage("IaC Initialize") {
+            steps {
+                sh "/var/jenkins_home/terraform init"
+            }
+        }
+
+        stage('IaC Validation') {
+            failFast true
+            parallel {
+                stage("IaC Drift Check") {
+                    steps {
+                        // sh "which dctlenv || git clone https://github.com/wbeuil/dctlenv"
+                        sh "/var/jenkins_home/dctlenv/bin/dctlenv use latest"
+                        sh "/var/jenkins_home/dctlenv/bin/driftctl scan --from tfstate+s3://terraform-state-sk/terraform-Iac.tfstate -o html://result.html"
+                        // sh "DCTL_OUTPUT=json:///tmp/result.json driftctl scan"
+                        // sh "/var/jenkins_home/dctlenv/bin/driftctl gen-driftignore -i /tmp/result.json --exclude-unmanaged > .driftignore"
+                        // sh "/var/jenkins_home/dctlenv/bin/driftctl gen-driftignore -i /tmp/result.json --exclude-missing > .driftignore"
+                    }
+                }
+                stage("IaC Format Check") {
+                    steps {
+                        // sh "/var/jenkins_home/terraform fmt -check -diff"
+                        sh "/var/jenkins_home/terraform fmt"
+                    }
+                }
+                stage("IaC Config Validation") {
+                    steps {
+                        sh "/var/jenkins_home/terraform validate"
+                    }
+                }
+            }
+        }
+        stage("IaC Planning") {
+            steps {
+                // sh "/var/jenkins_home/terraform plan -out=plan.out"
+                sh "/var/jenkins_home/terraform plan"
+            }
+        }
+
+        stage("IaC De-Provisioning") {
+            when {
+                expression { params.BRANCH_NAME == 'main' }
+                }
+            steps {
+                // sh "terraform apply -input=false plan.out"
+                sh "/var/jenkins_home/terraform destroy -auto-approve"
+                }
+        }
+
+        stage("Display Provisioned Resources") {
+            steps {
+                sh "/var/jenkins_home/terraform show"
+            }
+        }
+    }
+}
