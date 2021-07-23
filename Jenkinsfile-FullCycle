@@ -1,9 +1,11 @@
 pipeline {
     agent any
     environment {
-        AWS_DEFAULT_REGION="us-east-2"
-        AWS_ACCESS_KEY_ID=credentials("AWS_ACCESS_KEY_ID")
-        AWS_SECRET_ACCESS_KEY=credentials("AWS_SECRET_ACCESS_KEY")
+        AWS_DEFAULT_REGION="us-east-1"
+        AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+    //     AWS_ACCESS_KEY_ID=credentials("AWS_ACCESS_KEY_ID")
+    //     AWS_SECRET_ACCESS_KEY=credentials("AWS_SECRET_ACCESS_KEY")
         // http_proxy="http://4270db9afac8.ngrok.io"
         // https_proxy="https://4270db9afac8.ngrok.io"
         // PATH="$PATH:$HOME/dctlenv/bin/"

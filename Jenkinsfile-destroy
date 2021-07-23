@@ -6,13 +6,17 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
     //     AWS_ACCESS_KEY_ID=credentials("AWS_ACCESS_KEY_ID")
     //     AWS_SECRET_ACCESS_KEY=credentials("AWS_SECRET_ACCESS_KEY")
-        // PA//TH="$PATH:$HOME/dctlenv/bin/"
+        // PATH="$PATH:$HOME/dctlenv/bin/"
     }
     parameters {
         choice(
             choices: ['main' , 'master'],
             description: '',
             name: 'BRANCH_NAME')
+    }
+
+    options {
+        ansiColor('xterm')
     }
     
     stages {
