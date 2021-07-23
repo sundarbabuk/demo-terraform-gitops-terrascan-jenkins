@@ -73,7 +73,7 @@ pipeline {
                 }
             steps {
                 // sh "terraform apply -input=false plan.out"
-                sh "/var/jenkins_home/terraform apply"
+                sh "/var/jenkins_home/terraform apply -auto-approve"
                 }
         }
 
