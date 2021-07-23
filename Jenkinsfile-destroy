@@ -2,9 +2,11 @@ pipeline {
     agent any
     environment {
         AWS_DEFAULT_REGION="us-east-1"
-        AWS_ACCESS_KEY_ID=credentials("AWS_ACCESS_KEY_ID")
-        AWS_SECRET_ACCESS_KEY=credentials("AWS_SECRET_ACCESS_KEY")
-        // PATH="$PATH:$HOME/dctlenv/bin/"
+        AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+    //     AWS_ACCESS_KEY_ID=credentials("AWS_ACCESS_KEY_ID")
+    //     AWS_SECRET_ACCESS_KEY=credentials("AWS_SECRET_ACCESS_KEY")
+        // PA//TH="$PATH:$HOME/dctlenv/bin/"
     }
     parameters {
         choice(
