@@ -1,11 +1,23 @@
 {
   "results": {
-    "violations": null,
+    "violations": [
+      {
+        "rule_name": "port22AlbNetworkPortSecurityPublicScope",
+        "description": "'SSH' (TCP:22) is accessible by a CIDR block range",
+        "rule_id": "AWS.ALB.NetworkPortsSecurity.High.0194",
+        "severity": "HIGH",
+        "category": "Infrastructure Security",
+        "resource_name": "default",
+        "resource_type": "aws_security_group",
+        "file": "main.tf",
+        "line": 42
+      }
+    ],
     "count": {
       "low": 0,
       "medium": 0,
-      "high": 0,
-      "total": 0
+      "high": 1,
+      "total": 1
     }
   }
 }
