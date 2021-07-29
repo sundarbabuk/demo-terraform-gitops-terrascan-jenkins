@@ -33,7 +33,7 @@ resource "aws_instance" "default" {
   }
 }
 
-# Encrypt EBS Volume
+# Encrypt EBS Volumes
 resource "aws_ebs_encryption_by_default" "example" {
   enabled = true
 }
