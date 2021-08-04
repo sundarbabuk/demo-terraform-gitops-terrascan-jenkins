@@ -30,16 +30,16 @@ pipeline {
         stage('IaC Validation') {
             failFast true
             parallel {
-                stage("IaC Drift Check") {
-                    steps {
+            //     stage("IaC Drift Check") {
+            //         steps {
                         // sh "which dctlenv || git clone https://github.com/wbeuil/dctlenv"
-                        sh "/var/jenkins_home/dctlenv/bin/dctlenv use latest"
-                        sh "/var/jenkins_home/dctlenv/bin/driftctl scan --from tfstate+s3://terraform-state-sk/terraform-Iac.tfstate -o html://result.html"
+            //             sh "/var/jenkins_home/dctlenv/bin/dctlenv use latest"
+            //             sh "/var/jenkins_home/dctlenv/bin/driftctl scan --from tfstate+s3://terraform-state-sk/terraform-Iac.tfstate -o html://result.html"
                         // sh "DCTL_OUTPUT=json:///tmp/result.json driftctl scan"
                         // sh "/var/jenkins_home/dctlenv/bin/driftctl gen-driftignore -i /tmp/result.json --exclude-unmanaged > .driftignore"
                         // sh "/var/jenkins_home/dctlenv/bin/driftctl gen-driftignore -i /tmp/result.json --exclude-missing > .driftignore"
-                    }
-                }
+            //         }
+            //     }
                 stage("IaC Format Check") {
                     steps {
                         // sh "/var/jenkins_home/terraform fmt -check -diff"
