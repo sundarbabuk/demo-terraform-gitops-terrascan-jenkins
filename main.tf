@@ -51,8 +51,8 @@ resource "aws_security_group" "default" {
   }
 
   ingress {
-    from_port   = 39
-    to_port     = 39
+    from_port   = 40
+    to_port     = 40
     protocol    = "tcp"
     cidr_blocks = ["99.73.228.255/32"]
   }
