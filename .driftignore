@@ -5,3 +5,4 @@ aws_key_pair*
 aws_s3_bucket*
 aws_security_group*
 aws_instance.*
+aws_ebs_volume*
