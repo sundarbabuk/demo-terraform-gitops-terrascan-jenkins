@@ -28,11 +28,11 @@ pipeline {
     //     }
 
 
-    //     stage("IaC Initialize") {
-    //         steps {
-    //             sh "/var/jenkins_home/terraform init"
-    //         }
-    //     }
+        stage("IaC Initialize") {
+            steps {
+                sh "/var/jenkins_home/terraform init"
+            }
+        }
 
         stage('IaC Validation') {
             failFast true
