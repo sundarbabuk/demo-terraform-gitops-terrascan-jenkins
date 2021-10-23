@@ -47,14 +47,14 @@ resource "aws_security_group" "default" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["110.73.228.255/32"]
+    cidr_blocks = ["110.173.228.255/32"]
   }
 
   ingress {
     from_port   = 44
     to_port     = 44
     protocol    = "tcp"
-    cidr_blocks = ["110.73.228.255/32"]
+    cidr_blocks = ["110.173.228.255/32"]
   }
 
 }
