@@ -23,28 +23,29 @@ pipeline {
 
     stages {
       
-        stage("Build") {
+        stage("Code-Fuzz Test") {
             steps {
                 echo "Complete"
             }
         }
 
-        stage("Preliminary Test") {
+
+        stage("Build Container Image") {
             failFast true
             parallel {
-                stage("Unit Test") {
+                stage("1-Lint Conatinerfile") {
                     steps {
                         echo "Complete"
             }
         }
         
-                stage("Static Code Analysis") {
+                stage("2-Dependency Check") {
                     steps {
                         echo "Complete"
             }
         }
 
-                stage("SAST") {
+                stage("3-Image Creation") {
                     steps {
                         echo "Complete"
                     }
@@ -53,230 +54,299 @@ pipeline {
         }
 
 
-        stage("Dockerization") {
+        stage("Image Sanity Check") {
             failFast true
             parallel {
-                stage("Build Docker Image") {
+                stage("1-Image Efficiency Check") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+        
+                stage("2-App Unit Test") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+
+                stage("3-Static Code Analysis") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("4-SAST") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+
+                stage("5-Code Quality Gate") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+            }
+        }
+
+
+        stage("Security Scan") {
+            failFast true
+            parallel {
+                stage("1-Image-Vulnerability Analysis") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+
+                stage("2-Attest Vulnerability Analysis Report") {
                     steps {
                         echo "Complete"
                     }
                 }
                                
-                stage("Docker Image Analyzer") {
+                stage("3-STIG Compliance Check") {
                     steps {
                         echo "Complete"
                     }
                 }
 
-                stage("Docker Image Vulnerability Scan") {
+                stage("4-US-Govt Conf Baseline Analysis") {
                     steps {
                         echo "Complete"
                     }
                 }
-
-                stage("STIG Compliance Validation") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("Sign Docker Image") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("Push image to Artifactory") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
+              
             }
         }
 
-        stage("Dev Test") {
+
+        stage("Image Provenance") {
             failFast true
             parallel {
-                stage("Provision Dev Environment") {
+                stage("1-Provenance Creation") {
                     steps {
                         echo "Complete"
                     }
                 }
-                
-                stage("Validate Docker Image Signature") {
+                               
+                stage("2-Provenance Attestation") {
                     steps {
                         echo "Complete"
                     }
                 }
-
-                stage("Deploy latest image from Artifactory") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("Functional Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("Integration Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("Destroy Dev Environment") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
+                  
             }
         }
 
 
-        stage("Test Automation") {
+        stage("SBOM") {
             failFast true
             parallel {
-                stage("Provision Test Environment") {
+                stage("1-SBOM Creation") {
                     steps {
                         echo "Complete"
                     }
                 }
-                
-                stage("Validate Docker Image Signature") {
+                               
+                stage("2-SBOM Attestation") {
                     steps {
                         echo "Complete"
                     }
                 }
-
-                stage("Deploy latest image from Artifactory") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("System Performance Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("System Reliability Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("System Resiliency Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("System Compatibility Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("System Conformance Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("DAST Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("PEN Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("IAST Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("API Security Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("Regression Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("Destroy Dev Environment") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("Generate SBOM") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
+                  
             }
         }
 
 
-        stage("UAT-In Production") {
+        stage("Image Signing") {
             failFast true
             parallel {
-                stage("Validate Docker Image Signature") {
+                stage("1-Sign Container Image") {
                     steps {
                         echo "Complete"
                     }
                 }
-
-                stage("Dark Launch of latest image from Artifactory") {
+                               
+                stage("2-Verify Signature") {
                     steps {
                         echo "Complete"
                     }
                 }
-
-                stage("Functional Acceptance Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("Performance Acceptance Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("SLA Contract Acceptance Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("Regulatory Compliance Test") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
-
-                stage("Generate SBOM") {
-                    steps {
-                        echo "Complete"
-                    }
-                }
+                  
             }
         }
+
+
+        stage("Image Push") {
+            failFast true
+            parallel {
+                stage("1-Push Image to Registry") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("2-Push Provenance Info") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("3-Push Vulnerability Info") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("4-SBOM Info") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                  
+            }
+        }
+
+
+        stage("Application Sanity Test ") {
+            failFast true
+            parallel {
+                stage("1-Validate Image Signature") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("2-Validate Image Provenance") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+
+                stage("3-Validate SBOM") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("4-Deploy Image from Registry") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("5-Integration Test") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("6-Performance Test") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("7-DAST") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("8-SCA Test") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("9-IAST") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("10-Pen Test") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("11-Functional Test") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("12-UAT") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                  
+            }
+        }
+
+
+        stage("Resiliency Test") {
+            failFast true
+            parallel {
+                stage("1-Chaos Engineering") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("2-Regression Test") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                  
+            }
+        }
+
+
+        stage("Decommision Test Image") {
+            failFast true
+            parallel {
+                stage("1-Stop Container") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("2-Remove Container") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                  
+            }
+        }
+
+
+        stage("Notify Build Status") {
+            failFast true
+            parallel {
+                stage("1-E-mail build status") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("2-IM build status") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+            }
+                  
+        }    
     }
 }
