@@ -30,6 +30,24 @@ pipeline {
         }
 
 
+        stage("Code-Carbon Intensity Test") {
+            failFast true
+            parallel {
+                stage("1-Carbon Intensity Measurement") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("2-Code-Carbon Efficiency Gating") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                  
+            }
+        }
+
         stage("Build Container Image") {
             failFast true
             parallel {
