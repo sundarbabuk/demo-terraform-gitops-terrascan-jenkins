@@ -1,0 +1,395 @@
+pipeline {
+    agent any
+    environment {
+        AWS_DEFAULT_REGION="us-east-1"
+        AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+    //     AWS_ACCESS_KEY_ID=credentials("AWS_ACCESS_KEY_ID")
+    //     AWS_SECRET_ACCESS_KEY=credentials("AWS_SECRET_ACCESS_KEY")
+        // http_proxy="http://4270db9afac8.ngrok.io"
+        // https_proxy="https://4270db9afac8.ngrok.io"
+        // PATH="$PATH:$HOME/dctlenv/bin/"
+    }
+    parameters {
+        choice(
+            choices: ['main' , 'master'],
+            description: '',
+            name: 'BRANCH_NAME')
+    }
+    
+    options {
+        ansiColor('xterm')
+    }
+
+    stages {
+      
+        stage("Code-Fuzz Test") {
+            steps {
+                echo "Complete"
+            }
+        }
+
+
+        stage("Code-Carbon Intensity Test") {
+            failFast true
+            parallel {
+                stage("1-Carbon Intensity Measurement") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("2-Code-Carbon Efficiency Gating") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                  
+            }
+        }
+
+
+        stage("Build Container Image") {
+            failFast true
+            parallel {
+                stage("1-Lint Conatinerfile") {
+                    steps {
+                        echo "Complete"
+            }
+        }
+        
+                stage("2-Dependency Check") {
+                    steps {
+                        echo "Complete"
+            }
+        }
+
+                stage("3-Image Creation") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+            }
+        }
+
+
+        stage("Image Provenance") {
+            failFast true
+            parallel {
+                stage("1-Provenance Creation") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("2-Provenance Attestation") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                  
+            }
+        }
+
+        stage("Image Sanity Check") {
+            failFast true
+            parallel {
+                stage("1-Image Efficiency Check") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+        
+                stage("2-App Unit Test") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+
+                stage("3-Static Code Analysis") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("4-SAST") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+
+                stage("5-Code Quality Gate") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+            }
+        }
+
+
+        stage("SBOM") {
+            failFast true
+            parallel {
+                stage("1-SBOM Creation") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("2-SBOM Attestation") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                  
+            }
+        }
+
+
+        stage("Security Scan") {
+            failFast true
+            parallel {
+                stage("1-ImageVulnerabilityCheck") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+
+                stage("2-AttestVulnerabilityReport") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("3-STIG ComplianceCheck") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("4-US-Govt Conf Baseline Analysis") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+              
+            }
+        }
+
+                
+        stage("Image Signing") {
+            failFast true
+            parallel {
+                stage("1-Sign Container Image") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("2-Verify Signature") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                  
+            }
+        }
+
+
+        stage("Image Push") {
+            failFast true
+            parallel {
+                stage("1-Push Image to Registry") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("2-Push Provenance Info") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("3-Push Vulnerability Info") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("4-Push SBOM Info") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                  
+            }
+        }
+
+
+        stage("Application Sanity Test ") {
+            failFast true
+            parallel {
+                stage("1-Validate Image Signature") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("2-Validate Image Provenance") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+
+                stage("3-Validate SBOM") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("4-Deploy Image from Registry") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("5-Integration Test") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("6-Performance Test") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("7-DAST") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("8-SCA Test") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("9a-IAST") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("9b-Pen Test") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("9c-Functional Test") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("9d-UAT") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                  
+            }
+        }
+
+
+        stage("Resiliency Test") {
+            failFast true
+            parallel {
+                stage("1-Chaos Engineering") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("2-Regression Test") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                  
+            }
+        }
+
+
+        stage("Decommision Test Image") {
+            failFast true
+            parallel {
+                stage("1-Stop Test Container") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("2-Remove Test Container") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                  
+            }
+        }
+
+
+        stage("Decommision Build Container") {
+            failFast true
+            parallel {
+                stage("1-Stop Build Container") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("2-Remove Build Container") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                  
+            }
+        }
+
+
+        stage("Notify Build Status") {
+            failFast true
+            parallel {
+                stage("1-Update Story (Polarion/Jira)") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+                stage("2-E-mail build status") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+                               
+                stage("3-IM build status") {
+                    steps {
+                        echo "Complete"
+                    }
+                }
+
+            }
+                  
+        }    
+    }
+}
